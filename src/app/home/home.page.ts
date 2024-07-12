@@ -32,7 +32,7 @@ export class HomePage {
         'https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png',
       image:
         'https://www.elcorteingles.es/entradas/blog/wp-content/uploads/2020/12/Tipos-de-m%C3%BAsica-electr%C3%B3nica.jpg',
-      description: 'Genero musical electronico',
+      description: 'Genero musical vibrante',
     },
     {
       title: 'Tecno',
@@ -42,6 +42,33 @@ export class HomePage {
       image:
         'https://www.malavitanightbar.com/wp-content/uploads/2022/09/Musica-Techno.png',
       description: 'Genero musical clasico e interesante',
+    },
+    {
+      title: 'Regueton',
+      icon: 'megaphone-outline',
+      avatar:
+        'https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png',
+      image:
+        'https://es.rollingstone.com/wp-content/uploads/2023/12/Uno-de-los-generos-musicalmente-mas-pobres-Arcangel-habla-del-reggaeton.jpg',
+      description: 'Genero musical mas popular',
+    },
+    {
+      title: 'Bachata',
+      icon: 'shirt-outline',
+      avatar:
+        'https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png',
+      image:
+        'https://img.freepik.com/foto-gratis/pareja-joven-bailando-bachata_23-2149587488.jpg',
+      description: 'Genero musical muy buena para bailar',
+    },
+    {
+      title: 'Cumbia',
+      icon: 'musical-notes-outline',
+      avatar:
+        'https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png',
+      image:
+        'https://studio.rebaila.com/wp-content/uploads/2021/08/cumbiacolombia.jpeg',
+      description: 'Genero musical hermoso y ritmico',
     },
   ];
   constructor() {}
