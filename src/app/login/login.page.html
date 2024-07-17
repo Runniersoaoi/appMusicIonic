@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-text-uppercase ion-margin"
+      >iniciar sesión</ion-title
+    >
+    <ion-title class="ion-hide">Este mensaje estara oculto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <figure>
+    <img src="assets/profile.png" alt="" />
+  </figure>
+  <form [formGroup]="loginForm" (ngSubmit)="(loginUser(loginForm.value))">
+    <ion-item>
+      <ion-input
+        formControlName="email"
+        label="Email"
+        labelPlacement="floating"
+        placeholder="Correo electronico"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        formControlName="password"
+        type="password"
+        label="Password"
+        labelPlacement="floating"
+        placeholder="Escribe tu contraseña"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-button type="submit">Login</ion-button>
+  </form>
+</ion-content>
