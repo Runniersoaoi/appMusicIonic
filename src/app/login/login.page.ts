@@ -5,6 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AuthenticateService } from '../services/authenticate.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,21 @@ import {
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  validation_messages = {
+    email: [
+      { type: 'required', message: 'El email es obligatorio' },
+      { type: 'pattern', message: 'Email invalido' },
+    ],
+    password: [
+      { type: 'required', message: 'La contraseña es obligatoria' },
+      { type: 'minLength', message: 'Contraseña muy corta' },
+    ],
+  };
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthenticateService,
+    private navCtrl: NavController
+  ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
         '',
@@ -33,5 +49,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
   loginUser(dataLogin: any) {
     console.log(dataLogin);
+    this.authService.loginUser(dataLogin).then((res) => {
+      this.navCtrl.navigateForward('/home');
+    });
   }
 }
