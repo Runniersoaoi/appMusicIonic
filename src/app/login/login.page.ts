@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthenticateService } from '../services/authenticate.service';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-login',
@@ -25,10 +26,13 @@ export class LoginPage implements OnInit {
       { type: 'minLength', message: 'Contraseña muy corta' },
     ],
   };
+  errorMessage: any;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticateService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private alertController: AlertController,
+    private storage: Storage
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -49,8 +53,25 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
   loginUser(dataLogin: any) {
     console.log(dataLogin);
-    this.authService.loginUser(dataLogin).then((res) => {
-      this.navCtrl.navigateForward('/home');
+    this.authService
+      .loginUser(dataLogin)
+      .then((res) => {
+        this.errorMessage = '';
+        this.storage.set('isUserLoggedIn', true);
+        this.navCtrl.navigateForward('/home');
+      })
+      .catch((err) => {
+        this.errorMessage = err;
+        this.presentAlert(this.errorMessage);
+      });
+  }
+
+  async presentAlert(mss: string) {
+    const alert = await this.alertController.create({
+      header: 'Opps hubo un error',
+      message: mss,
+      buttons: ['OK'],
     });
+    await alert.present();
   }
 }
