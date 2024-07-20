@@ -5,18 +5,18 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthenticateService } from '../services/authenticate.service';
 import { AlertController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Router } from '@angular/router';
+import { AuthenticateService } from '../services/authenticate.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
-  loginForm: FormGroup;
+export class RegisterPage implements OnInit {
+  registerForm: FormGroup;
   validation_messages = {
     email: [
       { type: 'required', message: 'El email es obligatorio' },
@@ -26,22 +26,28 @@ export class LoginPage implements OnInit {
       { type: 'required', message: 'La contraseña es obligatoria' },
       { type: 'minLength', message: 'Contraseña muy corta' },
     ],
+    name: [
+      { type: 'required', message: 'El nombre es obligatoria' },
+      { type: 'pattern', message: 'El nombre es invalido' },
+    ],
+    last_name: [
+      { type: 'required', message: 'El apellido es obligatoria' },
+      { type: 'pattern', message: 'El apellido es invalido' },
+    ],
   };
-  errorMessage: any;
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthenticateService,
     private navCtrl: NavController,
-    private alertController: AlertController,
     private storage: Storage,
-    private router: Router
+    private alertController: AlertController,
+    private router: Router,
+    private authService: AuthenticateService
   ) {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       email: new FormControl(
         '',
         Validators.compose([
           Validators.required,
-          // Validators.email,
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9_.]+$'),
         ])
       ),
@@ -49,23 +55,29 @@ export class LoginPage implements OnInit {
         '',
         Validators.compose([Validators.required, Validators.minLength(8)])
       ),
+      name: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z]+$/),
+        ])
+      ),
+      last_name: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z]+$/),
+        ])
+      ),
     });
   }
 
-  ngOnInit() {}
-  loginUser(dataLogin: any) {
-    console.log(dataLogin);
-    this.authService
-      .loginUser(dataLogin)
-      .then((res) => {
-        this.errorMessage = '';
-        this.storage.set('isUserLoggedIn', true);
-        this.navCtrl.navigateForward('/home');
-      })
-      .catch((err) => {
-        this.errorMessage = err;
-        this.presentAlert(this.errorMessage);
-      });
+  registerUser(dataRegister: any) {
+    console.log(dataRegister);
+
+    this.authService.registerUser(dataRegister).then((res) => {
+      this.navCtrl.navigateBack('/login');
+    });
   }
 
   async presentAlert(mss: string) {
@@ -77,7 +89,9 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  toRegisterPage() {
-    this.router.navigateByUrl('/register');
+  toLoginPage() {
+    this.router.navigateByUrl('/login');
   }
+
+  ngOnInit() {}
 }
