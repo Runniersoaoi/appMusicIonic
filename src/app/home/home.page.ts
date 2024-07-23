@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  artists = [{}, {}, {}, {}, {}, {}];
+
   constructor(private router: Router) {}
   music() {
     this.router.navigateByUrl('/intro');
