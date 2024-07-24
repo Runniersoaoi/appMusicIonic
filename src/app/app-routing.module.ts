@@ -35,6 +35,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./menu/menu.module').then((m) => m.MenuPageModule),
   },
+  {
+    path: 'song-modal',
+    loadChildren: () => import('./song-modal/song-modal.module').then( m => m.SongModalPageModule)
+  },
 ];
 
 @NgModule({
